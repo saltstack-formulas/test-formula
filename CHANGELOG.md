@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/saltstack-formulas/test-formula/compare/v1.0.0...v1.0.1) (2020-12-12)
+
+
+### Documentation
+
+* **readme:** make minor adjustment to test PR GitLab pipeline ([edc5221](https://github.com/saltstack-formulas/test-formula/commit/edc52218dccba723465b531be851c7a55771ad4d))
+
 # 1.0.0 (2020-12-12)
 
 
