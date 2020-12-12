@@ -18,7 +18,7 @@
   image_semantic-release: &image_semanticrelease 'myii/ssf-semantic-release:15.14'
   # `only` (also used for `except` where applicable)
   only_branch_master_parent_repo: &only_branch_master_parent_repo
-    - 'master@saltstack-formulas/formulas/github/saltstack-formulas/consul-formula'
+    - 'master@saltstack-formulas/formulas/github/saltstack-formulas/test-formula'
 
 ###############################################################################
 # Define stages and global variables
