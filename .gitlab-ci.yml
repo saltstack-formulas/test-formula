@@ -25,7 +25,7 @@
 ###############################################################################
 stages:
   - *stage_lint
-  - *stage_test
+  # - *stage_test
   - *stage_release
 variables:
   DOCKER_DRIVER: 'overlay2'
@@ -58,69 +58,69 @@ pre-commit:
   script:
     - 'pre-commit run --all-files --color always --verbose'
 
-###############################################################################
-# Define `test` template
-###############################################################################
-.test_instance:
-  stage: *stage_test
-  image: *image_dindruby
-  services:
-    - 'docker:dind'
-  # https://forum.gitlab.com/t/gitlab-com-ci-caching-rubygems/5627/3
-  # https://bundler.io/v1.16/bundle_config.html
-  variables:
-    BUNDLE_CACHE_PATH: '${CI_PROJECT_DIR}/.cache/bundler'
-    BUNDLE_WITHOUT: 'production'
-  cache:
-    key: '${CI_JOB_STAGE}'
-    paths:
-      - '${BUNDLE_CACHE_PATH}'
-  before_script:
-    # TODO: This should work from the env vars above automatically
-    - 'bundle config set path "${BUNDLE_CACHE_PATH}"'
-    - 'bundle config set without "${BUNDLE_WITHOUT}"'
-    - 'bundle install'
-  script:
-    # Alternative value to consider: `${CI_JOB_NAME}`
-    - 'bin/kitchen verify "${DOCKER_ENV_CI_JOB_NAME}"'
-
-###############################################################################
-# `test` stage: each instance below uses the `test` template above
-###############################################################################
-## Define the rest of the matrix based on Kitchen testing
-# Make sure the instances listed below match up with
-# the `platforms` defined in `kitchen.yml`
-default-debian-10-master-py3: {extends: '.test_instance'}
-default-ubuntu-2004-master-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-master-py3: {extends: '.test_instance'}
-default-centos-8-master-py3: {extends: '.test_instance'}
-default-fedora-32-master-py3: {extends: '.test_instance'}
-# default-fedora-31-master-py3: {extends: '.test_instance'}
-# default-opensuse-leap-152-master-py3: {extends: '.test_instance'}
-# default-amazonlinux-2-master-py3: {extends: '.test_instance'}
-# default-debian-10-3000-3-py3: {extends: '.test_instance'}
-# default-debian-9-3000-3-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3000-3-py3: {extends: '.test_instance'}
-# default-centos-8-3000-3-py3: {extends: '.test_instance'}
-# default-centos-7-3000-3-py3: {extends: '.test_instance'}
-# default-fedora-31-3000-3-py3: {extends: '.test_instance'}
-default-opensuse-leap-152-3000-3-py3: {extends: '.test_instance'}
-default-amazonlinux-2-3000-3-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-3000-3-py2: {extends: '.test_instance'}
-# default-ubuntu-1604-3000-3-py2: {extends: '.test_instance'}
-# default-arch-base-latest-3000-3-py2: {extends: '.test_instance'}
-# default-debian-10-2019-2-py3: {extends: '.test_instance'}
-# default-debian-9-2019-2-py3: {extends: '.test_instance'}
-# default-ubuntu-1804-2019-2-py3: {extends: '.test_instance'}
-# default-ubuntu-1604-2019-2-py3: {extends: '.test_instance'}
-# default-centos-8-2019-2-py3: {extends: '.test_instance'}
-# default-centos-7-2019-2-py3: {extends: '.test_instance'}
-# default-fedora-31-2019-2-py3: {extends: '.test_instance'}
-# default-opensuse-leap-152-2019-2-py3: {extends: '.test_instance'}
-# default-amazonlinux-2-2019-2-py3: {extends: '.test_instance'}
-# default-centos-6-2019-2-py2: {extends: '.test_instance'}
-# default-amazonlinux-1-2019-2-py2: {extends: '.test_instance'}
-default-arch-base-latest-2019-2-py2: {extends: '.test_instance'}
+# ###############################################################################
+# # Define `test` template
+# ###############################################################################
+# .test_instance:
+#   stage: *stage_test
+#   image: *image_dindruby
+#   services:
+#     - 'docker:dind'
+#   # https://forum.gitlab.com/t/gitlab-com-ci-caching-rubygems/5627/3
+#   # https://bundler.io/v1.16/bundle_config.html
+#   variables:
+#     BUNDLE_CACHE_PATH: '${CI_PROJECT_DIR}/.cache/bundler'
+#     BUNDLE_WITHOUT: 'production'
+#   cache:
+#     key: '${CI_JOB_STAGE}'
+#     paths:
+#       - '${BUNDLE_CACHE_PATH}'
+#   before_script:
+#     # TODO: This should work from the env vars above automatically
+#     - 'bundle config set path "${BUNDLE_CACHE_PATH}"'
+#     - 'bundle config set without "${BUNDLE_WITHOUT}"'
+#     - 'bundle install'
+#   script:
+#     # Alternative value to consider: `${CI_JOB_NAME}`
+#     - 'bin/kitchen verify "${DOCKER_ENV_CI_JOB_NAME}"'
+#
+# ###############################################################################
+# # `test` stage: each instance below uses the `test` template above
+# ###############################################################################
+# ## Define the rest of the matrix based on Kitchen testing
+# # Make sure the instances listed below match up with
+# # the `platforms` defined in `kitchen.yml`
+# default-debian-10-master-py3: {extends: '.test_instance'}
+# default-ubuntu-2004-master-py3: {extends: '.test_instance'}
+# # default-ubuntu-1804-master-py3: {extends: '.test_instance'}
+# default-centos-8-master-py3: {extends: '.test_instance'}
+# default-fedora-32-master-py3: {extends: '.test_instance'}
+# # default-fedora-31-master-py3: {extends: '.test_instance'}
+# # default-opensuse-leap-152-master-py3: {extends: '.test_instance'}
+# # default-amazonlinux-2-master-py3: {extends: '.test_instance'}
+# # default-debian-10-3000-3-py3: {extends: '.test_instance'}
+# # default-debian-9-3000-3-py3: {extends: '.test_instance'}
+# # default-ubuntu-1804-3000-3-py3: {extends: '.test_instance'}
+# # default-centos-8-3000-3-py3: {extends: '.test_instance'}
+# # default-centos-7-3000-3-py3: {extends: '.test_instance'}
+# # default-fedora-31-3000-3-py3: {extends: '.test_instance'}
+# default-opensuse-leap-152-3000-3-py3: {extends: '.test_instance'}
+# default-amazonlinux-2-3000-3-py3: {extends: '.test_instance'}
+# # default-ubuntu-1804-3000-3-py2: {extends: '.test_instance'}
+# # default-ubuntu-1604-3000-3-py2: {extends: '.test_instance'}
+# # default-arch-base-latest-3000-3-py2: {extends: '.test_instance'}
+# # default-debian-10-2019-2-py3: {extends: '.test_instance'}
+# # default-debian-9-2019-2-py3: {extends: '.test_instance'}
+# # default-ubuntu-1804-2019-2-py3: {extends: '.test_instance'}
+# # default-ubuntu-1604-2019-2-py3: {extends: '.test_instance'}
+# # default-centos-8-2019-2-py3: {extends: '.test_instance'}
+# # default-centos-7-2019-2-py3: {extends: '.test_instance'}
+# # default-fedora-31-2019-2-py3: {extends: '.test_instance'}
+# # default-opensuse-leap-152-2019-2-py3: {extends: '.test_instance'}
+# # default-amazonlinux-2-2019-2-py3: {extends: '.test_instance'}
+# # default-centos-6-2019-2-py2: {extends: '.test_instance'}
+# # default-amazonlinux-1-2019-2-py2: {extends: '.test_instance'}
+# default-arch-base-latest-2019-2-py2: {extends: '.test_instance'}
 
 ###############################################################################
 # `release` stage: `semantic-release`
