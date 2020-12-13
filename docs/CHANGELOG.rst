@@ -2,6 +2,22 @@
 Changelog
 =========
 
+`1.0.2 <https://github.com/saltstack-formulas/test-formula/compare/v1.0.1...v1.0.2>`_ (2020-12-13)
+------------------------------------------------------------------------------------------------------
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **gitlab-ci:** disable ``test`` stage to speed up GitLab CI testing (\ `b64c06c <https://github.com/saltstack-formulas/test-formula/commit/b64c06c7cb2f9fd744ff8578fd5582e42ff8854f>`_\ )
+* **gitlab-ci:** update ``commitlint`` to work with ``coqbot`` (\ `2b8cbb2 <https://github.com/saltstack-formulas/test-formula/commit/2b8cbb26f19d2bd4599fad86a72a45999331d369>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** make minor adjustment to test PR GitLab pipeline (\ `342e140 <https://github.com/saltstack-formulas/test-formula/commit/342e140097968d39e525cf94762addb0dd3c8718>`_\ )
+
 `1.0.1 <https://github.com/saltstack-formulas/test-formula/compare/v1.0.0...v1.0.1>`_ (2020-12-12)
 ------------------------------------------------------------------------------------------------------
 
