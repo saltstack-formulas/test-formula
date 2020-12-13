@@ -40,9 +40,18 @@ commitlint:
     # Add `upstream` remote to get access to `upstream/master`
     - 'git remote add upstream ${CI_PROJECT_URL}.git'
     - 'git fetch --all'
+    # Work out the commit to use for `--to`
+    - 'export COMMITLINT_FROM="$(git merge-base upstream/master HEAD)"'
+    - 'export COMMITLINT_TO="${CI_COMMIT_SHA}"'
+    - |
+      if [ "${GITLAB_USER_NAME}" = "coqbot" ]; then
+        git -c user.name='Null' -c user.email='null@example.com' commit --amend -m \
+          'chore: reword coqbot merge commit message for commitlint'
+        export COMMITLINT_TO=HEAD
+      fi
     # Run `commitlint`
-    - 'commitlint --from "$(git merge-base upstream/master HEAD)"
-                  --to   "${CI_COMMIT_SHA}"
+    - 'commitlint --from "${COMMITLINT_FROM}"
+                  --to   "${COMMITLINT_TO}"
                   --verbose'
 
 pre-commit:
