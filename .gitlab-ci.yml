@@ -37,6 +37,7 @@ commitlint:
   stage: *stage_lint
   image: *image_commitlint
   script:
+    - 'export'
     # Add `upstream` remote to get access to `upstream/master`
     - 'git remote add upstream ${CI_PROJECT_URL}.git'
     - 'git fetch --all'
