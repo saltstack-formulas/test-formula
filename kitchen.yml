@@ -17,6 +17,15 @@ provisioner:
   salt_copy_filter:
     - .kitchen
     - .git
+  state_top:
+    base:
+      '*':
+        - TEST
+  pillars:
+    top.sls:
+      base:
+        '*':
+          - TEST
 
 platforms:
   ## SALT `tiamat`
@@ -40,7 +49,7 @@ platforms:
       run_command: /lib/systemd/systemd
   - name: debian-10-master-py3
     driver:
-      image: saltimages/salt-master-py3:debian-10
+      image: myii/salt-master-py3:debian-10
       run_command: /lib/systemd/systemd
   - name: debian-9-master-py3
     driver:
@@ -90,20 +99,17 @@ verifier:
     - cli
 
 suites:
-  - name: default
+  - name: include-using-dot-notation
     provisioner:
-      state_top:
-        base:
-          '*':
-            - TEST._mapdata
-            - TEST
       pillars:
-        top.sls:
-          base:
-            '*':
-              - TEST
-      pillars_from_files:
-        TEST.sls: pillar.example
-    verifier:
-      inspec_tests:
-        - path: test/integration/default
+        TEST.sls:
+          TEST:
+            test_includes:
+              include_notation: "."
+  - name: include-using-slash-notation
+    provisioner:
+      pillars:
+        TEST.sls:
+          TEST:
+            test_includes:
+              include_notation: "/"
