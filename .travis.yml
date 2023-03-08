@@ -88,6 +88,8 @@ jobs:
     # - env: INSTANCE=default-debian-9-tiamat-py3
     - env: INSTANCE=default-debian-11-master-py3
     - env: INSTANCE=default-debian-10-master-py3
+    - env: INSTANCE=include-using-dot-notation-debian-10-master-py3
+    - env: INSTANCE=include-using-slash-notation-debian-10-master-py3
     - env: INSTANCE=default-debian-9-master-py3
     # - env: INSTANCE=default-debian-11-3004-0-py3
     # - env: INSTANCE=default-debian-10-3004-0-py3
